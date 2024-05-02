@@ -1,25 +1,56 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34622.214
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mynew", "mynew\mynew.csproj", "{87C3E1BA-02BB-4927-884F-94FBA1493980}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87C3E1BA-02BB-4927-884F-94FBA1493980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87C3E1BA-02BB-4927-884F-94FBA1493980}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87C3E1BA-02BB-4927-884F-94FBA1493980}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87C3E1BA-02BB-4927-884F-94FBA1493980}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {86CC98A5-D8F4-4577-B170-484230A89F18}
-	EndGlobalSection
-EndGlobal
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WEBAPI.Models;
+
+namespace WEBAPI.Controllers
+{
+    public class EmployeesController : ApiController
+    {
+        public static List<Employee> employees = new List<Employee>
+        {
+            new Employee { ID=1 ,Name="Amanullah" ,salary=120000,status="active"},
+            new Employee { ID=2 ,Name="Ghazi khan" ,salary=130000,status="active"},
+            new Employee { ID=3 ,Name="Sawan Khan" ,salary=140000,status="active"}
+        };
+
+        public List<Employee> Get ()
+        {
+            return employees;
+        }
+        public Employee Get(int id)
+        {
+            return employees.FirstOrDefault(e=> e.ID==id);
+        }
+        public void Post(Employee employee)
+        {
+            employees.Add(employee);
+            
+        }
+        public void Put(int id,Employee employee)
+        {
+            var emp=employees.FirstOrDefault(e=> e.ID==id);
+            if (emp!=null)
+            {
+                emp.Name = employee.Name;
+                emp.salary= employee.salary;
+                emp.status= employee.status;
+
+
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var emp = employees.FirstOrDefault(e => e.ID == id);
+                employees.Remove(emp);
+
+        }
+        
+
+
+    }
+}
